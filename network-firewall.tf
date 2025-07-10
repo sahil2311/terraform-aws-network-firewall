@@ -1,5 +1,4 @@
 resource "aws_networkfirewall_firewall" "aws_networkfirewall_firewall" {
-  depends_on               = [time_sleep.wait_300_seconds]
   name                     = "${var.environment}-network-firewall"
   firewall_policy_arn      = aws_networkfirewall_firewall_policy.aws_networkfirewall_firewall_policy.arn
   vpc_id                   = aws_vpc.vpc.id
@@ -20,11 +19,7 @@ resource "aws_networkfirewall_firewall" "aws_networkfirewall_firewall" {
 }
 
 resource "time_sleep" "wait_180_seconds" {
-  depends_on       = [aws_route.aws_route]
+  depends_on       = [aws_networkfirewall_firewall.aws_networkfirewall_firewall]
   create_duration  = "300s"
   destroy_duration = "120s"
-}
-
-resource "time_sleep" "wait_300_seconds" {
-  destroy_duration = "300s"
 }
