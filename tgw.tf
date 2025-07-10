@@ -1,4 +1,5 @@
 resource "aws_ec2_transit_gateway" "aws_ec2_transit_gateway" {
+  depends_on                      = [aws_subnet.aws_subnet_inspection, aws_subnet.aws_subnet_public, aws_subnet.aws_subnet_tgw]
   description                     = "${var.environment}-tgw"
   auto_accept_shared_attachments  = "enable"
   default_route_table_association = "enable"
