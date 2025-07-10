@@ -1,7 +1,7 @@
 resource "aws_route_table_association" "aws_route_table_association_public" {
   count          = length(var.aws_cidrs_public)
   subnet_id      = element(aws_subnet.aws_subnet_public[*].id, count.index)
-  route_table_id = element(aws_route_table.aws_route_table_public[*].id, count.index)
+  route_table_id = aws_route_table.aws_route_table_public.id
 }
 
 resource "aws_route_table_association" "aws_route_table_association_inspection" {
