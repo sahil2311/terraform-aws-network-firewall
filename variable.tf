@@ -8,7 +8,7 @@ variable "aws_region" {
 
 variable "attached_stateful_managed_rules" {
   type    = bool
-  default = true
+  default = false
 }
 
 locals {
