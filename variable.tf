@@ -49,8 +49,3 @@ variable "aws_cidrs_tgw" {
   type    = list(string)
   default = ["10.0.96.0/20", "10.0.112.0/20", "10.0.128.0/20"]
 }
-
-variable "aws_cidrs_db" {
-  type    = list(string)
-  default = ["10.0.144.0/20", "10.0.160.0/20", "10.0.176.0/20"]
-}
