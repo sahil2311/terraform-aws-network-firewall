@@ -27,7 +27,7 @@ resource "aws_networkfirewall_rule_group" "drop_icmp" {
 }
 
 resource "aws_networkfirewall_rule_group" "block_public_dns_resolvers" {
-  count    = !var.attached_stateful_managed_rules ? 1 : 0
+  count    = var.attached_stateful_custom_rules_only ? 1 : 0
   capacity = 1
   name     = "block-public-dns-${var.environment}"
   type     = "STATEFUL"
@@ -53,7 +53,7 @@ resource "aws_networkfirewall_rule_group" "block_public_dns_resolvers" {
 }
 
 resource "aws_networkfirewall_rule_group" "block_domains" {
-  count       = !var.attached_stateful_managed_rules ? 1 : 0
+  count       = var.attached_stateful_custom_rules_only ? 1 : 0
   name        = "${var.environment}-stateful-domain-list"
   description = "Stateful rule group to block access to specific domains"
   capacity    = 100

@@ -6,9 +6,14 @@ variable "aws_region" {
   type = string
 }
 
-variable "attached_stateful_managed_rules" {
+variable "attached_stateful_managed_rules_only" {
   type    = bool
   default = true
+}
+
+variable "attached_stateful_custom_rules_only" {
+  type    = bool
+  default = false
 }
 
 variable "attached_stateless_icmp_blocked_rule" {
