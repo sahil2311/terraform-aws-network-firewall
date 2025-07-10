@@ -32,7 +32,7 @@ resource "aws_route_table" "aws_route_table_tgw" {
 }
 
 resource "aws_route" "aws_route_tgw" {
-  depends_on             = [aws_route_table.aws_route_table_tgw, aws_networkfirewall_firewall.aws_networkfirewall_firewall]
+  depends_on             = [aws_route_table.aws_route_table_tgw, aws_networkfirewall_firewall.aws_networkfirewall_firewall, time_sleep.wait_180_seconds]
   count                  = length(toset(flatten([for state in aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_status : [for sync in state.sync_states : [for attach in sync.attachment : attach.endpoint_id]]])))
   route_table_id         = aws_route_table.aws_route_table_tgw[count.index].id
   destination_cidr_block = "0.0.0.0/0"
