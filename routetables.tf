@@ -8,6 +8,9 @@ resource "aws_route_table" "aws_route_table_public" {
   tags = {
     Name = "${var.environment}-public-route"
   }
+  lifecycle {
+    ignore_changes = [route]
+  }
 }
 
 resource "aws_route_table" "aws_route_table_inspection" {

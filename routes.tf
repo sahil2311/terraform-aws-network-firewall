@@ -13,4 +13,7 @@ resource "aws_route" "aws_route" {
   route_table_id         = aws_route_table.aws_route_table_public.id
   destination_cidr_block = each.value
   transit_gateway_id     = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
+  lifecycle {
+    ignore_changes = [destination_cidr_block]
+  }
 }
