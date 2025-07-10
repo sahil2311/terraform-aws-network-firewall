@@ -41,4 +41,7 @@ resource "aws_networkfirewall_firewall_policy" "aws_networkfirewall_firewall_pol
       }
     }
   }
+  lifecycle {
+    create_before_destroy = true
+  }
 }
