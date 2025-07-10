@@ -13,11 +13,11 @@ locals {
 }
 
 variable "share_tgw_account_ids" {
-  type    = list(string)
+  type = list(string)
 }
 
 variable "external_vpc_ip_cidr" {
-  type    = list(string)
+  type = list(string)
 }
 
 variable "aws_vpc_cidr" {
