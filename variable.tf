@@ -13,7 +13,7 @@ variable "attached_stateful_managed_rules" {
 
 variable "attached_stateless_icmp_blocked_rule" {
   type    = bool
-  default = true
+  default = false
 }
 
 locals {
