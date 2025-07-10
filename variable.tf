@@ -6,6 +6,11 @@ variable "aws_region" {
   type = string
 }
 
+variable "attached_managed_rules" {
+  type    = bool
+  default = true
+}
+
 locals {
   aws_azs = ["${var.aws_region}a", "${var.aws_region}b", "${var.aws_region}c"]
 }
