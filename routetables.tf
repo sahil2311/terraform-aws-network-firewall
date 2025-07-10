@@ -24,8 +24,9 @@ resource "aws_route_table" "aws_route_table_inspection" {
 }
 
 resource "aws_route_table" "aws_route_table_tgw" {
-  count  = length(var.aws_cidrs_tgw)
-  vpc_id = aws_vpc.vpc.id
+  depends_on = [aws_networkfirewall_firewall.aws_networkfirewall_firewall]
+  count      = length(var.aws_cidrs_tgw)
+  vpc_id     = aws_vpc.vpc.id
   tags = {
     Name = "${var.environment}-tgw-route-${count.index + 1}"
   }
