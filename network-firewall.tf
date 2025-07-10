@@ -17,9 +17,3 @@ resource "aws_networkfirewall_firewall" "aws_networkfirewall_firewall" {
     delete = "1h"
   }
 }
-
-resource "time_sleep" "wait_180_seconds" {
-  depends_on       = [aws_networkfirewall_firewall.aws_networkfirewall_firewall]
-  create_duration  = "300s"
-  destroy_duration = "120s"
-}
