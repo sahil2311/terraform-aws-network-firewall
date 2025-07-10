@@ -1,0 +1,44 @@
+resource "aws_route_table" "aws_route_table_public" {
+  depends_on = [aws_ec2_transit_gateway.aws_ec2_transit_gateway]
+  for_each           = toset(var.external_vpc_ip_cidr)
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block = "0.0.0.0/0"
+    gateway_id = aws_internet_gateway.aws_internet_gateway.id
+  }
+
+  route {
+    cidr_block = each.value
+    gateway_id = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
+  }
+  tags = {
+    Name = "${var.environment}-public-route"
+  }
+}
+
+resource "aws_route_table" "aws_route_table_inspection" {
+  vpc_id = aws_vpc.vpc.id
+  route {
+    cidr_block     = "0.0.0.0/0"
+    nat_gateway_id = aws_nat_gateway.aws_nat_gateway.id
+  }
+  tags = {
+    Name = "${var.environment}-inspection-route"
+  }
+}
+
+resource "aws_route_table" "aws_route_table_tgw" {
+  count  = length(var.aws_cidrs_tgw)
+  vpc_id = aws_vpc.vpc.id
+  tags = {
+    Name = "${var.environment}-tgw-route-${count.index + 1}"
+  }
+}
+
+resource "aws_route" "aws_route_tgw" {
+  depends_on             = [aws_route_table.aws_route_table_tgw, aws_networkfirewall_firewall.aws_networkfirewall_firewall]
+  count                  = length(toset(flatten([for state in aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_status : [for sync in state.sync_states : [for attach in sync.attachment : attach.endpoint_id]]])))
+  route_table_id         = aws_route_table.aws_route_table_tgw[count.index].id
+  destination_cidr_block = "0.0.0.0/0"
+  vpc_endpoint_id        = flatten([for state in aws_networkfirewall_firewall.aws_networkfirewall_firewall.firewall_status : [for sync in state.sync_states : [for attach in sync.attachment : attach.endpoint_id]]])[count.index]
+}
