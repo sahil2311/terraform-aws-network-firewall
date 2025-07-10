@@ -53,10 +53,10 @@ resource "aws_networkfirewall_firewall_policy" "aws_networkfirewall_firewall_pol
       priority     = 20
       resource_arn = aws_networkfirewall_rule_group.drop_icmp.arn
     }
-    dynamic "stateful_rule_group_references" {
+    dynamic "stateful_rule_group_reference" {
       for_each = local.managed_rule_group_arns
       content {
-        resource_arn = stateful_rule_group_references.value
+        resource_arn = stateful_rule_group_reference.value
       }
     }
   }
