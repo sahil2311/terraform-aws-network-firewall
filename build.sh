@@ -3,9 +3,7 @@
 action=$1
 env=$2
 
-if [ "$env" = "sandbox" ]; then
-  AWS_REGION="us-east-1"
-fi
+AWS_REGION="us-east-2"
 
 accountid=$(aws sts get-caller-identity --query Account --output text)
 
