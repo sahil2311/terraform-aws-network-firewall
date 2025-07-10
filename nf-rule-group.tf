@@ -1,7 +1,8 @@
 resource "aws_networkfirewall_rule_group" "drop_icmp" {
-  capacity = 1
-  name     = "drop-icmp-${var.environment}"
-  type     = "STATELESS"
+  depends_on = [aws_networkfirewall_firewall_policy.aws_networkfirewall_firewall_policy]
+  capacity   = 1
+  name       = "drop-icmp-${var.environment}"
+  type       = "STATELESS"
   rule_group {
     rules_source {
       stateless_rules_and_custom_actions {
@@ -26,10 +27,11 @@ resource "aws_networkfirewall_rule_group" "drop_icmp" {
 }
 
 resource "aws_networkfirewall_rule_group" "block_public_dns_resolvers" {
-  count    = !var.attached_stateful_managed_rules ? 1 : 0
-  capacity = 1
-  name     = "block-public-dns-${var.environment}"
-  type     = "STATEFUL"
+  depends_on = [aws_networkfirewall_firewall_policy.aws_networkfirewall_firewall_policy]
+  count      = !var.attached_stateful_managed_rules ? 1 : 0
+  capacity   = 1
+  name       = "block-public-dns-${var.environment}"
+  type       = "STATEFUL"
   rule_group {
     rules_source {
       stateful_rule {
@@ -52,6 +54,7 @@ resource "aws_networkfirewall_rule_group" "block_public_dns_resolvers" {
 }
 
 resource "aws_networkfirewall_rule_group" "block_domains" {
+  depends_on  = [aws_networkfirewall_firewall_policy.aws_networkfirewall_firewall_policy]
   count       = !var.attached_stateful_managed_rules ? 1 : 0
   name        = "${var.environment}-stateful-domain-list"
   description = "Stateful rule group to block access to specific domains"
