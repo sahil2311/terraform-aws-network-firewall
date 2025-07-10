@@ -53,7 +53,6 @@ resource "aws_networkfirewall_rule_group" "block_public_dns_resolvers" {
 }
 
 resource "aws_networkfirewall_rule_group" "block_domains" {
-  depends_on  = [aws_networkfirewall_firewall_policy.aws_networkfirewall_firewall_policy]
   count       = !var.attached_stateful_managed_rules ? 1 : 0
   name        = "${var.environment}-stateful-domain-list"
   description = "Stateful rule group to block access to specific domains"
