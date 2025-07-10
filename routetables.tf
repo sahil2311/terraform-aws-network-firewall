@@ -1,15 +1,9 @@
 resource "aws_route_table" "aws_route_table_public" {
-  depends_on = [aws_ec2_transit_gateway.aws_ec2_transit_gateway]
   for_each           = toset(var.external_vpc_ip_cidr)
   vpc_id = aws_vpc.vpc.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.aws_internet_gateway.id
-  }
-
-  route {
-    cidr_block = each.value
-    gateway_id = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
   }
   tags = {
     Name = "${var.environment}-public-route"
