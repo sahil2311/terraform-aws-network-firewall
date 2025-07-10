@@ -38,12 +38,8 @@ output "tgw_subnets_cidr" {
   value = aws_subnet.aws_subnet_private_tgw.*.cidr_block
 }
 
-output "db_subnets" {
-  value = aws_subnet.aws_subnet_db.*.id
-}
-
-output "db_subnets_cidr" {
-  value = aws_subnet.aws_subnet_db.*.cidr_block
+output "tgw_id" {
+  value = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
 }
 
 output "availability_zone" {

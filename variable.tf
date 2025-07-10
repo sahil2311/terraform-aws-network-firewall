@@ -3,14 +3,6 @@ variable "environment" {
   default = "stage"
 }
 
-variable "remote_state_bucket" {
-  type = string
-}
-
-variable "remote_state_region" {
-  type = string
-}
-
 variable "aws_region" {
   type    = string
   default = "eu-west-2"
@@ -22,12 +14,10 @@ locals {
 
 variable "share_tgw_account_ids" {
   type    = list(string)
-  default = [""]
 }
 
 variable "external_vpc_ip_cidr" {
   type    = list(string)
-  default = [""]
 }
 
 variable "aws_vpc_cidr" {
