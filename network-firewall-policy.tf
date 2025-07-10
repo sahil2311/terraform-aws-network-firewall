@@ -22,7 +22,8 @@ locals {
 }
 
 resource "aws_networkfirewall_firewall_policy" "aws_networkfirewall_firewall_policy" {
-  name = "${var.environment}-network-policy"
+  depends_on = [var.attached_stateless_icmp_blocked_rule, aws_networkfirewall_rule_group.block_domains, aws_networkfirewall_rule_group.block_public_dns_resolvers]
+  name       = "${var.environment}-network-policy"
   firewall_policy {
     stateless_default_actions          = ["aws:forward_to_sfe"]
     stateless_fragment_default_actions = ["aws:forward_to_sfe"]
