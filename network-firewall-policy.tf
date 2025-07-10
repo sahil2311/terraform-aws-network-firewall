@@ -27,10 +27,10 @@ resource "aws_networkfirewall_firewall_policy" "aws_networkfirewall_firewall_pol
     stateless_default_actions          = ["aws:forward_to_sfe"]
     stateless_fragment_default_actions = ["aws:forward_to_sfe"]
     dynamic "stateless_rule_group_reference" {
-      for_each = var.attached_stateless_icmp_blocked_rule ? 1 : 0
+      for_each = var.attached_stateless_icmp_blocked_rule ? toset([aws_networkfirewall_rule_group.drop_icmp[0].arn]) : toset([])
       content {
         priority     = 20
-        resource_arn = aws_networkfirewall_rule_group.drop_icmp[0].arn
+        resource_arn = stateless_rule_group_reference.value
       }
     }
     dynamic "stateful_rule_group_reference" {
