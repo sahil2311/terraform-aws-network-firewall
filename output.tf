@@ -31,11 +31,11 @@ output "inspection_subnets_cidr" {
 }
 
 output "tgw_subnets" {
-  value = aws_subnet.aws_subnet_private_tgw.*.id
+  value = aws_subnet.aws_subnet_tgw.*.id
 }
 
 output "tgw_subnets_cidr" {
-  value = aws_subnet.aws_subnet_private_tgw.*.cidr_block
+  value = aws_subnet.aws_subnet_tgw.*.cidr_block
 }
 
 output "tgw_id" {

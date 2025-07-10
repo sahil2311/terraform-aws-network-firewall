@@ -12,7 +12,7 @@ resource "aws_ec2_transit_gateway" "aws_ec2_transit_gateway" {
 resource "aws_ec2_transit_gateway_vpc_attachment" "aws_ec2_transit_gateway_vpc_attachment_ingress" {
   transit_gateway_id = aws_ec2_transit_gateway.aws_ec2_transit_gateway.id
   vpc_id             = aws_vpc.vpc.id
-  subnet_ids         = aws_subnet.aws_subnet_private_tgw.*.id
+  subnet_ids         = aws_subnet.aws_subnet_tgw.*.id
   tags = {
     Name = "${var.environment}-vpc-att-tgw"
   }

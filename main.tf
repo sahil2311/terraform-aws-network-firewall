@@ -33,8 +33,8 @@ resource "aws_nat_gateway" "aws_nat_gateway" {
 resource "aws_subnet" "aws_subnet_public" {
   count                   = length(var.aws_cidrs_public)
   vpc_id                  = aws_vpc.vpc.id
-  cidr_block              = var.aws_cidrs_public[count.index]
-  availability_zone       = local.aws_azs[count.index]
+  cidr_block              = element(var.aws_cidrs_public, count.index)
+  availability_zone       = element(local.aws_azs, count.index)
   map_public_ip_on_launch = "true"
   tags = {
     Name = "${var.environment}-public-subnet-${element(local.aws_azs, count.index)}"
@@ -44,18 +44,18 @@ resource "aws_subnet" "aws_subnet_public" {
 resource "aws_subnet" "aws_subnet_inspection" {
   count             = length(var.aws_cidrs_inspection)
   vpc_id            = aws_vpc.vpc.id
-  cidr_block        = var.aws_cidrs_inspection[count.index]
-  availability_zone = local.aws_azs[count.index]
+  cidr_block        = element(var.aws_cidrs_inspection, count.index)
+  availability_zone = element(local.aws_azs, count.index)
   tags = {
     Name = "${var.environment}-inspection-subnet-${element(local.aws_azs, count.index)}"
   }
 }
 
-resource "aws_subnet" "aws_subnet_private_tgw" {
+resource "aws_subnet" "aws_subnet_tgw" {
   count             = length(var.aws_cidrs_tgw)
   vpc_id            = aws_vpc.vpc.id
-  cidr_block        = var.aws_cidrs_tgw[count.index]
-  availability_zone = local.aws_azs[count.index]
+  cidr_block        = element(var.aws_cidrs_tgw, count.index)
+  availability_zone = element(local.aws_azs, count.index)
   tags = {
     Name = "${var.environment}-tgw-subnet-${element(local.aws_azs, count.index)}"
   }
