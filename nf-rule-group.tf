@@ -1,5 +1,6 @@
 resource "aws_networkfirewall_rule_group" "drop_icmp" {
   depends_on = [aws_networkfirewall_firewall_policy.aws_networkfirewall_firewall_policy]
+  count      = var.attached_stateless_icmp_blocked_rule ? 1 : 0
   capacity   = 1
   name       = "drop-icmp-${var.environment}"
   type       = "STATELESS"

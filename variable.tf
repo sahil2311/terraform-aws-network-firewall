@@ -11,6 +11,11 @@ variable "attached_stateful_managed_rules" {
   default = true
 }
 
+variable "attached_stateless_icmp_blocked_rule" {
+  type    = bool
+  default = true
+}
+
 locals {
   aws_azs = ["${var.aws_region}a", "${var.aws_region}b", "${var.aws_region}c"]
 }
