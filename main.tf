@@ -42,6 +42,7 @@ resource "aws_subnet" "aws_subnet_public" {
 }
 
 resource "aws_subnet" "aws_subnet_inspection" {
+  depends_on        = [aws_nat_gateway.aws_nat_gateway]
   count             = length(var.aws_cidrs_inspection)
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = element(var.aws_cidrs_inspection, count.index)
@@ -52,7 +53,7 @@ resource "aws_subnet" "aws_subnet_inspection" {
 }
 
 resource "aws_subnet" "aws_subnet_tgw" {
-  depends_on        = [aws_networkfirewall_firewall.aws_networkfirewall_firewall]
+  depends_on        = [aws_networkfirewall_firewall.aws_networkfirewall_firewall, aws_subnet.aws_subnet_public, aws_subnet.aws_subnet_inspection]
   count             = length(var.aws_cidrs_tgw)
   vpc_id            = aws_vpc.vpc.id
   cidr_block        = element(var.aws_cidrs_tgw, count.index)

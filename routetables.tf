@@ -33,7 +33,7 @@ resource "aws_route_table" "aws_route_table_tgw" {
 }
 
 resource "aws_route" "aws_route_tgw" {
-  depends_on             = [aws_route_table.aws_route_table_tgw, aws_networkfirewall_firewall.aws_networkfirewall_firewall]
+  depends_on             = [aws_route_table.aws_route_table_tgw, aws_networkfirewall_firewall.aws_networkfirewall_firewall, aws_subnet.aws_subnet_tgw, aws_subnet.aws_subnet_inspection, aws_subnet.aws_subnet_public]
   count                  = length(var.aws_cidrs_tgw)
   route_table_id         = aws_route_table.aws_route_table_tgw[count.index].id
   destination_cidr_block = "0.0.0.0/0"
