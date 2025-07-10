@@ -20,7 +20,7 @@ locals {
     "arn:aws:network-firewall:${var.aws_region}:aws-managed:stateful-rulegroup/ThreatSignaturesMalwareActionOrder",
     "arn:aws:network-firewall:${var.aws_region}:aws-managed:stateful-rulegroup/ThreatSignaturesFUPActionOrder"
   ]
-  managed_rules = var.attached_managed_rules ? local.managed_rule_group_arns : concat([aws_networkfirewall_rule_group.block_domains.arn, aws_networkfirewall_rule_group.block_public_dns_resolvers.arn])
+  managed_rules = var.attached_stateful_managed_rules ? local.managed_rule_group_arns : concat([aws_networkfirewall_rule_group.block_domains[0].arn, aws_networkfirewall_rule_group.block_public_dns_resolvers[0].arn])
 }
 
 resource "aws_networkfirewall_firewall_policy" "aws_networkfirewall_firewall_policy" {

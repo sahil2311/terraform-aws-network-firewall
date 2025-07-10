@@ -6,7 +6,7 @@ variable "aws_region" {
   type = string
 }
 
-variable "attached_managed_rules" {
+variable "attached_stateful_managed_rules" {
   type    = bool
   default = true
 }
