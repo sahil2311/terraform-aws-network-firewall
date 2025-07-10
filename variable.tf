@@ -1,6 +1,5 @@
 variable "environment" {
-  type    = string
-  default = "stage"
+  type = string
 }
 
 variable "aws_region" {
