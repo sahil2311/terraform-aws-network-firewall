@@ -1,6 +1,5 @@
 resource "aws_route_table" "aws_route_table_public" {
-  for_each = toset(var.external_vpc_ip_cidr)
-  vpc_id   = aws_vpc.vpc.id
+  vpc_id = aws_vpc.vpc.id
   route {
     cidr_block = "0.0.0.0/0"
     gateway_id = aws_internet_gateway.aws_internet_gateway.id
